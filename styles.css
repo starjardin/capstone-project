@@ -8,7 +8,7 @@
 
 html,
 body {
-	font-family: 'Oswald', sans-serif;
+	font-family: 'Poppins', sans-serif;
 	margin: 0;
 	padding: 0;
 }
@@ -60,6 +60,7 @@ div.order-button > button:disabled {
 	justify-content: space-between;
 	align-items: center;
 	margin: 20px 0;
+  flex-wrap: wrap;
 }
 
 .cart-item img {
