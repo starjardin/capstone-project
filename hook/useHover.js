@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-export default function useHover (arguments) {
+export default function useHover () {
   const [hovered, setHovered] = useState(false)
   const hoverRef = useRef(null)
-  
+
   function handleMouseEnter () {
     setHovered(true)
   }
@@ -11,6 +11,17 @@ export default function useHover (arguments) {
   function handleMouseLeave () {
     setHovered(false)
   }
+
+  useEffect (() => {
+    hoverRef.current.addEventListener("mouseenter", handleMouseEnter)
+    hoverRef.current.addEventListener("mouseleave", handleMouseLeave)
+    return () => {  
+      hoverRef.current.removeEventListener("mouseenter", handleMouseEnter)
+      hoverRef.current.removeEventListener("mouseleave", handleMouseLeave)
+    }
+  }, [])
+
+  return [ hovered, hoverRef ]
 }
 
 /**
