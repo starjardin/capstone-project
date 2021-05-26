@@ -5,15 +5,11 @@ import Image from '../components/Image'
 
 function Photos() {
   const { allPhotos } = useContext(Context)
-  const image = allPhotos.map((photo, index )=> (
-    <Image key={index} className={getClass(index)} img={photo}/>)
-  )
+  const image = allPhotos.map((photo, index) => (
+    <Image key={index} className={getClass(index)} img={photo} />
+  ))
 
-	return (
-		<main className="photos">
-      {image}
-		</main>
-	)
+  return <main className='photos'>{image}</main>
 }
 
 export default Photos

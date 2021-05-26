@@ -2,18 +2,19 @@ import React, { useState, useEffect } from 'react'
 
 const Context = React.createContext()
 
-const URL = "https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json"
+const URL =
+  'https://raw.githubusercontent.com/bobziroll/scrimba-react-bootcamp-images/master/images.json'
 
-function ContextProvider (props) {
-  const [ allPhotos, setAllPhotos ] = useState([])
-  const [ cartItems, setCartItems ] = useState([])
+function ContextProvider(props) {
+  const [allPhotos, setAllPhotos] = useState([])
+  const [cartItems, setCartItems] = useState([])
 
-  useEffect (() => {
+  useEffect(() => {
     getPhotos()
   }, [])
 
   const getPhotos = async () => {
-    const storedPhotos = JSON.parse(localStorage.getItem("allPhotos"))
+    const storedPhotos = JSON.parse(localStorage.getItem('allPhotos'))
     if (storedPhotos.length) {
       setAllPhotos(storedPhotos)
     } else {
@@ -23,12 +24,12 @@ function ContextProvider (props) {
     }
   }
 
-  useEffect (() => {
-    localStorage.setItem("allPhotos", JSON.stringify(allPhotos))
+  useEffect(() => {
+    localStorage.setItem('allPhotos', JSON.stringify(allPhotos))
   }, [allPhotos])
 
-  useEffect (() => {
-    const cartItemsFavorited = JSON.parse(localStorage.getItem("cartItems"))
+  useEffect(() => {
+    const cartItemsFavorited = JSON.parse(localStorage.getItem('cartItems'))
     if (cartItemsFavorited.length) {
       setCartItems(cartItemsFavorited)
     } else {
@@ -36,16 +37,16 @@ function ContextProvider (props) {
     }
   }, [])
 
-  useEffect (() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems))
   }, [cartItems])
 
-  function toggleFavorite (id) {
-    const newPhotosArr = allPhotos.map(photo => {
+  function toggleFavorite(id) {
+    const newPhotosArr = allPhotos.map((photo) => {
       if (photo.id === id) {
         return {
           ...photo,
-          isFavorite : !photo.isFavorite
+          isFavorite: !photo.isFavorite,
         }
       }
       return photo
@@ -53,31 +54,30 @@ function ContextProvider (props) {
     setAllPhotos(newPhotosArr)
   }
 
-  function addPhotosToCart (newCartItimes) {
-    setCartItems(prevItems => [...prevItems, newCartItimes])
+  function addPhotosToCart(newCartItimes) {
+    setCartItems((prevItems) => [...prevItems, newCartItimes])
   }
 
-  function removePhotosFromCart (imgId) {
-    setCartItems(prevItems => prevItems.filter(photo =>  photo.id !== imgId))
+  function removePhotosFromCart(imgId) {
+    setCartItems((prevItems) => prevItems.filter((photo) => photo.id !== imgId))
   }
 
-  function emptyCart () {
-      setCartItems([])
+  function emptyCart() {
+    setCartItems([])
   }
 
   return (
-      <Context.Provider
-        value={{
-          allPhotos,
-          toggleFavorite,
-          cartItems,
-          addPhotosToCart,
-          removePhotosFromCart,
-          emptyCart
-        }}
-      >
-        {props.children}
-      </Context.Provider>
+    <Context.Provider
+      value={{
+        allPhotos,
+        toggleFavorite,
+        cartItems,
+        addPhotosToCart,
+        removePhotosFromCart,
+        emptyCart,
+      }}>
+      {props.children}
+    </Context.Provider>
   )
 }
 
